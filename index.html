@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Time Tunnel</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div id="container"></div>
+    <script src="js/libs/Detector.js"></script>
+    <script src="js/libs/three.js"></script>
+    <script src="js/TimeTunnel.js"></script>
+    <script>
+        if(!Detector.webgl) {
+            Detector.addGetWebGLMessage();
+        }
+        var container = document.getElementById('container');
+        var view = new TimeTunnel.View(window.innerWidth, window.innerHeight, container);
+        view.render();
+    </script>
+</body>
+</html>
