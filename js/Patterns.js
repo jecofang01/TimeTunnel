@@ -37,17 +37,24 @@ TimeTunnel.TunnelPattern.prototype = {
     },
 
     createBottom: function() {
+        var scope = this;
         var material = new THREE.MeshPhongMaterial({
-            color: 0xffcccc,
-            specular: 0xffffff,
-            map: THREE.ImageUtils.loadTexture("res/floor.jpg"),
-            vertexColors: THREE.NoColors,
-            shading: THREE.FlatShading
+            map: THREE.ImageUtils.loadTexture("res/floor.jpg", THREE.UVMapping, function(texture){
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+                material.needsUpdate = true;
+                scope._view.render();
+            })
         });
 
-        var geometry = new THREE.BoxGeometry(this._view._viewWidth, this._view._viewheight * 0.01, 5000);
+        var geometry = new THREE.PlaneGeometry(this._view._viewWidth, 5000, 20, 40);
         var mesh = new THREE.Mesh(geometry, material);
+        mesh.rotateX( -Math.PI / 2);
         mesh.position.set(0, -this._view._viewheight * 0.99 /2  , -this._view.FAR / 2);
+
+        var light = new THREE.PointLight(0xffffff);
+        light.physicalAttenuation = true;
+        light.position.set(0, 0, -500);
+        this._container.add(light);
 
         this._meshArray.push(mesh);
         this._container.add(mesh);

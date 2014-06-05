@@ -18,6 +18,12 @@
         var container = document.getElementById('container');
         var view = new TimeTunnel.View(window.innerWidth, window.innerHeight, container);
         view.render();
+
+        window.addEventListener( 'resize', onWindowResize, false );
+        function onWindowResize() {
+            view.setSize(window.innerWidth, window.innerHeight);
+            view.render();
+        }
     </script>
 </body>
 </html>
